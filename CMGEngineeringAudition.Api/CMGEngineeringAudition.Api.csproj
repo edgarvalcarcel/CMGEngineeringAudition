@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DocumentationFile>CMGEngineeringAudition.Api.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+    </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Logging\**" />
+    <Content Remove="Logging\**" />
+    <EmbeddedResource Remove="Logging\**" />
+    <None Remove="Logging\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Services\AuthenticatedUserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+ 	<Content Update="nlog.config" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AspNetCoreHero.Extensions.Logging" Version="1.0.0" />
+    <PackageReference Include="Audit.NET.NLog" Version="16.5.4" />
+    <PackageReference Include="Audit.NET.SqlServer" Version="16.5.4" />
+    <PackageReference Include="Audit.WebApi.Core" Version="16.5.4" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" NoWarn="NU1605" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.4" NoWarn="NU1605" />
+    <PackageReference Include="NLog" Version="4.7.8" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.11.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.4">
+      
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMGEngineeringAudition.Application\CMGEngineeringAudition.Application.csproj" />
+    <ProjectReference Include="..\CMGEngineeringAudition.Infrastructure.Shared\CMGEngineeringAudition.Infrastructure.Shared.csproj" />
+    <ProjectReference Include="..\CMGEngineeringAudition.Infrastructure\CMGEngineeringAudition.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+
+</Project>
