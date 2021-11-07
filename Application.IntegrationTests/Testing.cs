@@ -1,20 +1,14 @@
 ﻿using CMGEngineeringAudition.Api;
-using CMGEngineeringAudition.Application.Interfaces.Shared;
 using CMGEngineeringAudition.Infrastructure.DbContexts;
-using CMGEngineeringAudition.Infrastructure.SystemParameter;
-using CMGEngineeringAudition.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using Respawn;
-using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 [SetUpFixture]

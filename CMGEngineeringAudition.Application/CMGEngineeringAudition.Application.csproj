@@ -6,13 +6,10 @@
 
   <ItemGroup>
     <Compile Remove="Enums\**" />
-    <Compile Remove="Features\Commands\**" />
     <Compile Remove="Features\Common\**" />
     <EmbeddedResource Remove="Enums\**" />
-    <EmbeddedResource Remove="Features\Commands\**" />
     <EmbeddedResource Remove="Features\Common\**" />
     <None Remove="Enums\**" />
-    <None Remove="Features\Commands\**" />
     <None Remove="Features\Common\**" />
   </ItemGroup>
   <ItemGroup>
@@ -33,5 +30,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CMGEngineeringAudition.Domain\CMGEngineeringAudition.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mappings\" />
   </ItemGroup>
 </Project>

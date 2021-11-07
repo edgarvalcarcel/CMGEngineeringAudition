@@ -1,0 +1,35 @@
+﻿using Audit.WebApi;
+using CMGEngineeringAudition.API.Controllers;
+using CMGEngineeringAudition.Application.Features.Commands;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Threading.Tasks;
+namespace CMGEngineeringAudition.Api.Controllers.v1
+{
+    [Route("api/")]
+    [ApiController]
+    [AuditApi(EventTypeName = "{controller}/{action} ({verb})", IncludeHeaders = true, IncludeResponseBody = true, IncludeRequestBody = true, IncludeModelState = true)]
+    public class QualityControlController : BaseApiController<QualityControlController>
+    {
+        [Route("getlog")]
+        [HttpPost]
+        public async Task<IActionResult> EvaluateLogFile(IFormFile file, [FromServices] IWebHostEnvironment hosting) /* [FromQuery] string logContentsStr*/
+        {
+            if (ModelState.IsValid)
+            {
+                string filename = $"{hosting.WebRootPath}\\files\\{file.FileName}";
+                using (FileStream fileStream = System.IO.File.Create(filename))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+               var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = file.FileName });
+                return Ok(properties);
+            }
+            else
+                return StatusCode(400, "Bad request");
+        }
+    }
+}
