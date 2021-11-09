@@ -1,13 +1,13 @@
 ﻿using Audit.WebApi;
 using CMGEngineeringAudition.Api.Models;
 using CMGEngineeringAudition.API.Controllers;
-using CMGEngineeringAudition.Application.Features.Commands;
+//using CMGEngineeringAudition.Application.Features.Commands;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System;
-using System.Threading.Tasks;
+
 namespace CMGEngineeringAudition.Api.Controllers.v1
 {
     [Route("api/[controller]")]
@@ -23,9 +23,9 @@ namespace CMGEngineeringAudition.Api.Controllers.v1
 
         [HttpPost]
         [Route("upload")]
-        public async Task<string> Upload([FromForm] UploadFile obj)
+        public string Upload([FromForm] UploadFile obj)
         {
-            if (obj.files.Length>0)
+            if (obj.files.Length > 0)
             {
                 try
                 {
@@ -42,7 +42,7 @@ namespace CMGEngineeringAudition.Api.Controllers.v1
                 }
                 catch (Exception ex)
                 {
-                    return ex.ToString();                    
+                    return ex.ToString();
                 }
             }
             else
@@ -50,23 +50,5 @@ namespace CMGEngineeringAudition.Api.Controllers.v1
                 return "Upload Failed";
             }
         }
-        //[Route("getlog")]
-        //[HttpPost]
-        //public async Task<IActionResult> EvaluateLogFile(IFormFile file, [FromServices] IWebHostEnvironment hosting) /* [FromQuery] string logContentsStr*/
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        string filename = $"{hosting.WebRootPath}\\files\\{file.FileName}";
-        //        using (FileStream fileStream = System.IO.File.Create(filename))
-        //        {
-        //            file.CopyTo(fileStream);
-        //            fileStream.Flush();
-        //        }
-        //       var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = file.FileName });
-        //        return Ok(properties);
-        //    }
-        //    else
-        //        return StatusCode(400, "Bad request");
-        //}
     }
 }
