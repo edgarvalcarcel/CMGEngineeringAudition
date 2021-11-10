@@ -1,4 +1,4 @@
-﻿using CMGEngineeringAudition.Api;
+﻿using CMGEngineeringAudition.WebAPI;
 using CMGEngineeringAudition.Infrastructure.DbContexts;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -16,8 +16,7 @@ public class Testing
 {
     private static IConfigurationRoot _configuration;
     private static IServiceScopeFactory _scopeFactory;
-    private static string _currentUserId;
-    private static readonly Checkpoint _checkpoint;
+    public static readonly Checkpoint _checkpoint;
 
     [OneTimeSetUp]
     public void RunBeforeAnyTests()
@@ -39,26 +38,7 @@ public class Testing
 
         services.AddLogging();
         startup.ConfigureServices(services);
-
-        // Replace service registration for ICurrentUserService
-        // Remove existing registration
-        //var currentUserServiceDescriptor = services.FirstOrDefault(d =>
-        //    d.ServiceType == typeof(IAuthenticatedUserService));
-
-        //services.Remove(currentUserServiceDescriptor);
-
-        // Register testing version
-        //services.AddTransient(provider =>
-        //    Mock.Of<IAuthenticatedUserService>(s => s.UserId == _currentUserId));
-
-
         _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
-
-        //_checkpoint = new Checkpoint
-        //{
-        //    TablesToIgnore = new[] { "__EFMigrationsHistory" }
-        //};
-        //EnsureDatabase();
     }
     private static void EnsureDatabase()
     {

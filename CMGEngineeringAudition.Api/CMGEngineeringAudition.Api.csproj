@@ -23,7 +23,7 @@
     <PackageReference Include="AspNetCoreHero.Extensions.Logging" Version="1.0.0" />
     <PackageReference Include="Audit.NET.NLog" Version="16.5.4" />
     <PackageReference Include="Audit.NET.SqlServer" Version="16.5.4" />
-    <PackageReference Include="Audit.WebApi.Core" Version="18.1.6" />
+    <PackageReference Include="Audit.WebAPI.Core" Version="18.1.6" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.4" NoWarn="NU1605" />

@@ -3,12 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Entities\**" />
-    <EmbeddedResource Remove="Entities\**" />
-    <None Remove="Entities\**" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.Abstractions" Version="1.0.0" />
     <PackageReference Include="AspNetCoreHero.Results" Version="1.1.1" />

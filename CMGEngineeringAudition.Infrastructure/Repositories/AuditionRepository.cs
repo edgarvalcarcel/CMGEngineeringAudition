@@ -18,7 +18,7 @@ namespace CMGEngineeringAudition.Infrastructure.Repositories
             _configuration = configuration;
             _distributedCache = distributedCache;
         }
-        List<DTOAuditionDevice> IAuditionRepository.EvaluateLogFile(string fname)
+        public async Task<List<DTOAuditionDevice>> EvaluateLogFile(string fname)
         {
             var fileName = $"{Directory.GetCurrentDirectory()}{@"\wwwroot\files"}" + "\\" + fname;
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);

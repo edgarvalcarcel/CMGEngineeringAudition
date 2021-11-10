@@ -20,53 +20,23 @@ namespace CMGEngineeringAudition.Api.Controllers.v1
         {
             _webHostEnvironment = webHostEnvironment;
         }
-
+        [Route("getlog")]
         [HttpPost]
-        [Route("upload")]
-        public async Task<string> Upload([FromForm] UploadFile obj)
+        public async Task<IActionResult> EvaluateLogFile(IFormFile file, [FromServices] IWebHostEnvironment hosting) /* [FromQuery] string logContentsStr*/
         {
-            if (obj.files.Length>0)
+            if (ModelState.IsValid)
             {
-                try
+                string filename = $"{hosting.WebRootPath}\\files\\{file.FileName}";
+                using (FileStream fileStream = System.IO.File.Create(filename))
                 {
-                    if (!Directory.Exists(_webHostEnvironment.WebRootPath + "\\images\\"))
-                    {
-                        Directory.CreateDirectory(_webHostEnvironment.WebRootPath + "\\images\\");
-                    }
-                    using (FileStream filestream = System.IO.File.Create(_webHostEnvironment.WebRootPath + "\\images\\" + obj.files.FileName))
-                    {
-                        obj.files.CopyTo(filestream);
-                        filestream.Flush();
-                        return "\\images\\" + obj.files.FileName;
-                    }
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
                 }
-                catch (Exception ex)
-                {
-                    return ex.ToString();                    
-                }
+                var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = file.FileName });
+                return Ok(properties);
             }
             else
-            {
-                return "Upload Failed";
-            }
+                return StatusCode(400, "Bad request");
         }
-        //[Route("getlog")]
-        //[HttpPost]
-        //public async Task<IActionResult> EvaluateLogFile(IFormFile file, [FromServices] IWebHostEnvironment hosting) /* [FromQuery] string logContentsStr*/
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        string filename = $"{hosting.WebRootPath}\\files\\{file.FileName}";
-        //        using (FileStream fileStream = System.IO.File.Create(filename))
-        //        {
-        //            file.CopyTo(fileStream);
-        //            fileStream.Flush();
-        //        }
-        //       var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = file.FileName });
-        //        return Ok(properties);
-        //    }
-        //    else
-        //        return StatusCode(400, "Bad request");
-        //}
     }
 }

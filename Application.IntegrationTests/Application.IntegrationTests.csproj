@@ -25,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CMGEngineeringAudition.Api\CMGEngineeringAudition.Api.csproj" />
     <ProjectReference Include="..\CMGEngineeringAudition.Application\CMGEngineeringAudition.Application.csproj" />
+    <ProjectReference Include="..\CMGEngineeringAudition.WebAPI\CMGEngineeringAudition.WebAPI.csproj" />
   </ItemGroup>
 
 </Project>

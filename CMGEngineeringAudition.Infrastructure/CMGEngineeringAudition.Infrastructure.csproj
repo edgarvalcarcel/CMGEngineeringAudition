@@ -3,22 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Identity\**" />
-    <Compile Remove="Migrations\ApplicationDb\**" />
-    <Compile Remove="NLogger\**" />
-    <EmbeddedResource Remove="Identity\**" />
-    <EmbeddedResource Remove="Migrations\ApplicationDb\**" />
-    <EmbeddedResource Remove="NLogger\**" />
-    <None Remove="Identity\**" />
-    <None Remove="Migrations\ApplicationDb\**" />
-    <None Remove="NLogger\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="DbContexts\IdentityContext.cs" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.EntityFrameworkCore.Auditing" Version="1.0.0" />
     <PackageReference Include="AspNetCoreHero.Extensions.Caching" Version="1.1.0" />

@@ -23,9 +23,9 @@ namespace CMGEngineeringAudition.Application.Features.Commands
         }
         public async Task<Result<EvaluateResponse>> Handle(EvaluateLogCommand request, CancellationToken cancellationToken)
         {
-            var orderObj =  _auditRepository.EvaluateLogFile(request.ContentFile);
+            var orderObj = await _auditRepository.EvaluateLogFile(request.ContentFile);
             EvaluateResponse evaluateResponse = new();
-            return Result<EvaluateResponse>.Success();
+            return Result<EvaluateResponse>.Success(evaluateResponse);
         }
     }
 }

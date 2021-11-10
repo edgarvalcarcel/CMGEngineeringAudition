@@ -3,15 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Enums\**" />
-    <Compile Remove="Features\Common\**" />
-    <EmbeddedResource Remove="Enums\**" />
-    <EmbeddedResource Remove="Features\Common\**" />
-    <None Remove="Enums\**" />
-    <None Remove="Features\Common\**" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.Results" Version="1.1.1" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />

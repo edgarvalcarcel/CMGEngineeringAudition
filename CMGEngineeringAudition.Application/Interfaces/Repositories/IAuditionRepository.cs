@@ -6,6 +6,6 @@ namespace CMGEngineeringAudition.Application.Interfaces.Repositories
 {
     public interface IAuditionRepository
     {
-        List<DTOAuditionDevice> EvaluateLogFile(string filename);
+        Task<List<DTOAuditionDevice>> EvaluateLogFile(string filename);
     }
 }

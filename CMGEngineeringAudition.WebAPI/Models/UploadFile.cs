@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace CMGEngineeringAudition.Api.Models
+namespace CMGEngineeringAudition.WebAPI.Models
 {
     public class UploadFile
     {

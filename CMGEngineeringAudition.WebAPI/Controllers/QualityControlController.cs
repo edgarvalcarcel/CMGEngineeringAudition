@@ -1,14 +1,13 @@
 ﻿using Audit.WebApi;
-using CMGEngineeringAudition.Api.Models;
-using CMGEngineeringAudition.API.Controllers;
-//using CMGEngineeringAudition.Application.Features.Commands;
+using CMGEngineeringAudition.Application.Features.Commands;
+using CMGEngineeringAudition.WebAPI.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
-namespace CMGEngineeringAudition.Api.Controllers.v1
+namespace CMGEngineeringAudition.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -23,32 +22,48 @@ namespace CMGEngineeringAudition.Api.Controllers.v1
 
         [HttpPost]
         [Route("upload")]
-        public string Upload([FromForm] UploadFile obj)
+        public async Task<IActionResult> UploadAsync([FromForm] UploadFile obj)
         {
             if (obj.files.Length > 0)
             {
                 try
                 {
-                    if (!Directory.Exists(_webHostEnvironment.WebRootPath + "\\images\\"))
+                    if (!Directory.Exists(_webHostEnvironment.WebRootPath + "\\Uploadfiles\\"))
                     {
-                        Directory.CreateDirectory(_webHostEnvironment.WebRootPath + "\\images\\");
+                        Directory.CreateDirectory(_webHostEnvironment.WebRootPath + "\\Uploadfiles\\");
                     }
-                    using (FileStream filestream = System.IO.File.Create(_webHostEnvironment.WebRootPath + "\\images\\" + obj.files.FileName))
+                    using (FileStream filestream = System.IO.File.Create(_webHostEnvironment.WebRootPath + "\\Uploadfiles\\" + obj.files.FileName))
                     {
                         obj.files.CopyTo(filestream);
                         filestream.Flush();
-                        return "\\images\\" + obj.files.FileName;
+                        //return "\\Uploadfiles\\" + obj.files.FileName;
                     }
+                    var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = _webHostEnvironment.WebRootPath + "\\Uploadfiles\\" + obj.files.FileName });
+                    return Ok();
                 }
                 catch (Exception ex)
                 {
-                    return ex.ToString();
+                    return BadRequest();
                 }
             }
             else
             {
-                return "Upload Failed";
+                return BadRequest("Upload Failed");
             }
+
+            //if (ModelState.IsValid)
+            //{
+            //    string filename = $"{hosting.WebRootPath}\\files\\{file.FileName}";
+            //    using (FileStream fileStream = System.IO.File.Create(filename))
+            //    {
+            //        file.CopyTo(fileStream);
+            //        fileStream.Flush();
+            //    }
+            //    var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = file.FileName });
+            //    return Ok(properties);
+            //}
+            //else
+            //    return StatusCode(400, "Bad request");
         }
     }
 }
