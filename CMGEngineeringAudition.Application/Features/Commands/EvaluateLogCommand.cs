@@ -33,29 +33,9 @@ namespace CMGEngineeringAudition.Application.Features.Commands
                 switch (item.DeviceName)
                 {
                     case "thermometer":
-                        int count = item.Details.Count;
-                        var ordereddevices = item.Details.OrderBy(p => p.Precision);
-                        double median = ordereddevices.ElementAt(count / 2).Precision + ordereddevices.ElementAt((count - 1) / 2).Precision;
-                        median /= 2;
-
+                        double median= _mathService.Median(item.Details);
                         double stdev = _mathService.StdDev(item.Details.Select(o => o.Precision));
-                           
-
-
-                        //_mathService.StdDev
-
-                        //double meanOfValues = item.Details.Average<>;
-                        //double sumOfValues = values.Select(v => (v - meanOfValues) * (v - meanOfValues)).Sum();
-                        //int countOfValues = values.Count;
-                        //double standardDeviationOfValues =
-                        //    Math.Sqrt(sumOfValues / (countOfValues - (sample ? 1 : 0)));
-
-                        //return standardDeviationOfValues;
-
-
-                        //var ordereddevicesSD = item.Details.OrderBy(p => p.Precision).Average;
-
-                        if ((orderObj.Temperature-0.5) <= median && median == ((orderObj.Temperature + 0.5)))
+                        if (((orderObj.Temperature-0.5) <= median && median == (orderObj.Temperature + 0.5)) && stdev < 3)
                         {
                             EvaluateResponse responseItem= new() 
                             {

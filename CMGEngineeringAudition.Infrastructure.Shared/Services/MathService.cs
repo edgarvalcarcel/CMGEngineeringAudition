@@ -1,4 +1,5 @@
-﻿using CMGEngineeringAudition.Application.Interfaces.Shared;
+﻿using CMGEngineeringAudition.Application.Features.Commands;
+using CMGEngineeringAudition.Application.Interfaces.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,14 @@ namespace CMGEngineeringAudition.Infrastructure.Shared.Services
 {
     public class MathService : IMathService
     {
+        public double Median(List<Measurements.MeasuresDetails> details)
+        {
+            int count = details.Count;
+            var ordereddevices = details.OrderBy(p => p.Precision);
+            double median = ordereddevices.ElementAt(count / 2).Precision + ordereddevices.ElementAt((count - 1) / 2).Precision;
+            return (median /= 2);
+        }
+
         public double StdDev(IEnumerable<double> values)
         {
             double mean = 0.0;
