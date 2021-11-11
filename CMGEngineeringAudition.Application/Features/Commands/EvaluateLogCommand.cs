@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using static CMGEngineeringAudition.Application.Features.Commands.Measurements;
 using System.Linq;
 using System;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace CMGEngineeringAudition.Application.Features.Commands
 {
