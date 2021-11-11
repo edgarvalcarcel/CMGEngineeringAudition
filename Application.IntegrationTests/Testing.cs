@@ -34,7 +34,7 @@ public class Testing
 
         services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
             w.EnvironmentName == "Development" &&
-            w.ApplicationName == "CMGEngineeringAudition.Api"));
+            w.ApplicationName == "CMGEngineeringAudition.WebAPI"));
 
         services.AddLogging();
         startup.ConfigureServices(services);
