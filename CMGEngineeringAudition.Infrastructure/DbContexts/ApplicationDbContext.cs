@@ -1,7 +1,5 @@
 ﻿using AspNetCoreHero.Abstractions.Domain;
 using AspNetCoreHero.EntityFrameworkCore.Auditing;
-using CMGEngineeringAudition.Application.DTOs.GetCodeTableContent;
-using CMGEngineeringAudition.Application.DTOs.GetSystemParameter;
 using CMGEngineeringAudition.Application.Interfaces.Contexts;
 using CMGEngineeringAudition.Application.Interfaces.Shared;
 using CMGEngineeringAudition.Domain.Common;
