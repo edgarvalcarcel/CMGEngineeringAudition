@@ -17,11 +17,11 @@ namespace CMGEngineeringAudition.Application.Features.Commands
     }
     public class EvaluateLogCommandHandler : IRequestHandler<EvaluateLogCommand, Result<List<EvaluateResponse>>>
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IAuditionRepository _auditRepository;
-        public EvaluateLogCommandHandler(IUnitOfWork unitOfWork, IAuditionRepository auditRepository)
+        private readonly IMathService _mathService;
+        public EvaluateLogCommandHandler(IMathService mathService, IAuditionRepository auditRepository)
         {
-            _unitOfWork = unitOfWork;
+            _mathService = mathService;
             _auditRepository = auditRepository;
         }
         public async Task<Result<List<EvaluateResponse>>> Handle(EvaluateLogCommand request, CancellationToken cancellationToken)
@@ -38,9 +38,24 @@ namespace CMGEngineeringAudition.Application.Features.Commands
                         double median = ordereddevices.ElementAt(count / 2).Precision + ordereddevices.ElementAt((count - 1) / 2).Precision;
                         median /= 2;
 
+                        double stdev = _mathService.StdDev(item.Details.Select(o => o.Precision));
+                           
+
+
+                        //_mathService.StdDev
+
+                        //double meanOfValues = item.Details.Average<>;
+                        //double sumOfValues = values.Select(v => (v - meanOfValues) * (v - meanOfValues)).Sum();
+                        //int countOfValues = values.Count;
+                        //double standardDeviationOfValues =
+                        //    Math.Sqrt(sumOfValues / (countOfValues - (sample ? 1 : 0)));
+
+                        //return standardDeviationOfValues;
+
+
                         //var ordereddevicesSD = item.Details.OrderBy(p => p.Precision).Average;
 
-                        if ((orderObj.Temperature-0.5) <= median && median == ((orderObj.Temperature + 0.5)) && )
+                        if ((orderObj.Temperature-0.5) <= median && median == ((orderObj.Temperature + 0.5)))
                         {
                             EvaluateResponse responseItem= new() 
                             {

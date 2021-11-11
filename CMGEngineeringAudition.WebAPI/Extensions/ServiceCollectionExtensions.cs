@@ -24,6 +24,7 @@ namespace CMGEngineeringAudition.WebAPI.Extensions
             services.AddTransient<IIntegerService, NumberService>();
             services.AddTransient<IListService, ListService>();
             services.AddTransient<IMailService, SMTPMailService>();
+            services.AddTransient<IMathService, MathService>();
         }
         public static void AddEssentials(this IServiceCollection services)
         {
