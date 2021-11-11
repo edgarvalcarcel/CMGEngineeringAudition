@@ -21,12 +21,9 @@ namespace CMGEngineeringAudition.Infrastructure.DbContexts
         private readonly IDateTimeService _dateTime;
         //private readonly IAuthenticatedUserService _authenticatedUser;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTimeService dateTime
-            //, IAuthenticatedUserService authenticatedUser
-            ) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTimeService dateTime) : base(options)
         {
             _dateTime = dateTime;
-            //_authenticatedUser = authenticatedUser;
         }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
@@ -50,7 +47,7 @@ namespace CMGEngineeringAudition.Infrastructure.DbContexts
                         //entry.Entity.LastUpdateBy = _authenticatedUser.UserId;
                         break;
                 } 
-    }
+            }
             return await base.SaveChangesAsync(cancellationToken);
         }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -61,24 +58,6 @@ namespace CMGEngineeringAudition.Infrastructure.DbContexts
             {
                 property.SetColumnType("decimal(19,4)");
             }
-            builder.Entity<DTOCodeTableContent>(builder =>
-            {
-                builder.HasNoKey();
-            });
-            base.OnModelCreating(builder);
-
-
-            foreach (var property in builder.Model.GetEntityTypes()
-          .SelectMany(t => t.GetProperties())
-          .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
-            {
-                property.SetColumnType("decimal(19,4)");
-            }
-            builder.Entity<DTOSystemParameter>(builder =>
-            {
-                builder.HasNoKey();
-            });
-            base.OnModelCreating(builder);
         }
     }
 }
