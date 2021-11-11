@@ -10,12 +10,22 @@ namespace CMGEngineeringAudition.Infrastructure.Shared.Services
 {
     public class MathService : IMathService
     {
+        public double Maximum(IEnumerable<double> values)
+        {
+            return values.Max();
+        }
+
         public double Median(List<Measurements.MeasuresDetails> details)
         {
             int count = details.Count;
             var ordereddevices = details.OrderBy(p => p.Precision);
             double median = ordereddevices.ElementAt(count / 2).Precision + ordereddevices.ElementAt((count - 1) / 2).Precision;
             return (median /= 2);
+        }
+
+        public double Minimum(IEnumerable<double> values)
+        {
+            return values.Min();
         }
 
         public double StdDev(IEnumerable<double> values)

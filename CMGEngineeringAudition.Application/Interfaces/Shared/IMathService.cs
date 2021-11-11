@@ -7,5 +7,7 @@ namespace CMGEngineeringAudition.Application.Interfaces.Shared
     {
         double StdDev(IEnumerable<double> values);
         double Median(List<Measurements.MeasuresDetails> details);
+        double Maximum(IEnumerable<double> values);
+        double Minimum(IEnumerable<double> values);
     }
 }

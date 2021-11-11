@@ -17,6 +17,7 @@ namespace CMGEngineeringAudition.Application.Features.Commands
     }
     public class EvaluateLogCommandHandler : IRequestHandler<EvaluateLogCommand, Result<List<EvaluateResponse>>>
     {
+        private const double tempConst = 0.5;
         private readonly IAuditionRepository _auditRepository;
         private readonly IMathService _mathService;
         public EvaluateLogCommandHandler(IMathService mathService, IAuditionRepository auditRepository)
@@ -28,40 +29,69 @@ namespace CMGEngineeringAudition.Application.Features.Commands
         {
             List<EvaluateResponse> evalResponseList = new();
             MeasureReference orderObj = _auditRepository.EvaluateLogFile(request.ContentFile);
+
             foreach (var item in orderObj.Devices)
             {
+                double median = _mathService.Median(item.Details);
+                double stdev = _mathService.StdDev(item.Details.Select(o => o.Precision));
+                double max = _mathService.Maximum(item.Details.Select(o => o.Precision));
+                double min = _mathService.Minimum(item.Details.Select(o => o.Precision));
+                EvaluateResponse responseItem = new();
+                responseItem.DeviceName = item.DeviceId;
                 switch (item.DeviceName)
                 {
                     case "thermometer":
-                        double median= _mathService.Median(item.Details);
-                        double stdev = _mathService.StdDev(item.Details.Select(o => o.Precision));
-                        if (((orderObj.Temperature-0.5) <= median && median == (orderObj.Temperature + 0.5)) && stdev < 3)
-                        {
-                            EvaluateResponse responseItem= new() 
-                            {
-                                DeviceName = item.DeviceId,
-                                Precision = "ultra precise"
-                            };
-                            evalResponseList.Add(responseItem);
-                        }
-                        
-
-
+                        responseItem.Precision = TemperaturePrecision(median, stdev, orderObj.Temperature);
                         break;
                     case "humidity":
-                        // code block
+                        responseItem.Precision = HumidityPrecision(min, max);                        
                         break;
                     case "monoxide":
-                        // code block
+                        responseItem.Precision = MonoxidePrecision(min, max);
                         break;
                     default:
                         // code block
                         break;
                 }
+                evalResponseList.Add(responseItem);
             }
-            
             return Result<List<EvaluateResponse>>.Success(evalResponseList);
         }
-         
+
+        private string MonoxidePrecision(double min, double max)
+        {
+            if (max <= 0.1 && min >= -0.1)
+            {
+                return "keep";
+            }
+            else return "discard";
+        }
+
+        private static string HumidityPrecision(double min, double max)
+        {
+            if (max <= 0.5 && min >= -0.5)
+            {
+                return "keep";
+            }
+            else return "discard";
+        }
+
+        private static string TemperaturePrecision(double median, double stdev, double temperature)
+        {
+            string result;
+            if ((temperature - tempConst <= median && median <= (temperature + 0.5)) && stdev < 3)
+            {
+                result = "ultra precise";
+            }
+            else if ((temperature - tempConst) <= median && median <= (temperature + 0.5) && (3 <= stdev && stdev <= 5))
+            {
+                result = "very precise";
+            }
+            else
+            {
+                result = "precise";
+            };
+            return result;
+        }
     }
 }
