@@ -28,6 +28,7 @@ namespace CMGEngineeringAudition.WebAPI.Controllers
             {
                 try
                 {
+                    string filename;
                     if (!Directory.Exists(_webHostEnvironment.WebRootPath + "\\Uploadfiles\\"))
                     {
                         Directory.CreateDirectory(_webHostEnvironment.WebRootPath + "\\Uploadfiles\\");
@@ -35,10 +36,11 @@ namespace CMGEngineeringAudition.WebAPI.Controllers
                     using (FileStream filestream = System.IO.File.Create(_webHostEnvironment.WebRootPath + "\\Uploadfiles\\" + obj.files.FileName))
                     {
                         obj.files.CopyTo(filestream);
+                        filename = filestream.Name;
                         filestream.Flush();
                         //return "\\Uploadfiles\\" + obj.files.FileName;
                     }
-                    var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = _webHostEnvironment.WebRootPath + "\\Uploadfiles\\" + obj.files.FileName });
+                    var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = filename });
                     return Ok();
                 }
                 catch (Exception ex)

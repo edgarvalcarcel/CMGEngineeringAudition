@@ -12,6 +12,8 @@ namespace CMGEngineeringAudition.Application.Features.Commands
         }
         [JsonProperty(PropertyName = "deviceName")]
         public String DeviceName { get; set; }
+
+        [JsonProperty(PropertyName = "precision")]
         public String Precision { get; set; }
     }
 }
