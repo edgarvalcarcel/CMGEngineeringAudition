@@ -47,10 +47,10 @@ namespace CMGEngineeringAudition.Application.Features.Commands
                         responseItem.Precision = HumidityPrecision(min, max);                        
                         break;
                     case "monoxide":
-                        responseItem.Precision = MonoxidePrecision(min, max);
+                        responseItem.Precision = MonoxidePrecision(min, max, median);
                         break;
                     default:
-                        // code block
+                        responseItem.Precision = "No device";
                         break;
                 }
                 evalResponseList.Add(responseItem);
@@ -58,9 +58,9 @@ namespace CMGEngineeringAudition.Application.Features.Commands
             return Result<List<EvaluateResponse>>.Success(evalResponseList);
         }
 
-        private string MonoxidePrecision(double min, double max)
+        private string MonoxidePrecision(double min, double max, double median)
         {
-            if (max <= 0.1 && min >= -0.1)
+            if (median - min <= 3 && median - max <=3)
             {
                 return "keep";
             }
@@ -69,7 +69,7 @@ namespace CMGEngineeringAudition.Application.Features.Commands
 
         private static string HumidityPrecision(double min, double max)
         {
-            if (max <= 0.5 && min >= -0.5)
+            if (max - min<=1)
             {
                 return "keep";
             }

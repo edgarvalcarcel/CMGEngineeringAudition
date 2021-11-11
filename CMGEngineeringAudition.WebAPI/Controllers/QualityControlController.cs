@@ -41,7 +41,7 @@ namespace CMGEngineeringAudition.WebAPI.Controllers
                         //return "\\Uploadfiles\\" + obj.files.FileName;
                     }
                     var properties = await _mediator.Send(new EvaluateLogCommand() { ContentFile = filename });
-                    return Ok();
+                    return Ok(properties);
                 }
                 catch (Exception ex)
                 {
